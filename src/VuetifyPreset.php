@@ -1,12 +1,18 @@
 <?php
-namespace LaravelFrontendPresets\SkeletonPreset;
+
+namespace LaravelFrontendPresets\VuetifyPreset;
 
 use Artisan;
 use Illuminate\Support\Arr;
 use Illuminate\Filesystem\Filesystem;
 use Illuminate\Foundation\Console\Presets\Preset;
 
-class SkeletonPreset extends Preset
+/**
+ * Class VuetifyPreset.
+ *
+ * @package LaravelFrontendPresets\VuetifyPreset
+ */
+class VuetifyPreset extends Preset
 {
     /**
      * Install the preset.
@@ -16,7 +22,7 @@ class SkeletonPreset extends Preset
     public static function install($withAuth = false)
     {
         static::updatePackages();
-        static::updateSass(); // or static::updateLess()
+        static::updateStyles();
         static::updateBootstrapping();
 
         if($withAuth)
@@ -39,30 +45,20 @@ class SkeletonPreset extends Preset
      */
     protected static function updatePackageArray(array $packages)
     {
-        // packages to add to the package.json
-        $packagesToAdd = ['package-name' => '^version'];
-        // packages to remove from the package.json
-        $packagesToRemove = ['package-name' => '^version'];
+        $packagesToAdd = ['vuetify' => '^0.17.6'];
+        $packagesToRemove = ['bootstrap-sass'];
         return $packagesToAdd + Arr::except($packages, $packagesToRemove);
     }
 
     /**
-     * Update the Sass files for the application.
+     * Update styles.
      *
-     * @return void
      */
-    protected static function updateSass()
+    protected static function updateStyles()
     {
-        // clean up all the files in the sass folder
-        $orphan_sass_files = glob(resource_path('/assets/sass/*.*'));
-
-        foreach($orphan_sass_files as $sass_file)
-        {
-            (new Filesystem)->delete($sass_file);
-        }
-
-        // copy files from the stubs folder
-        copy(__DIR__.'/skeleton-stubs/app.scss', resource_path('assets/sass/app.scss'));
+        (new Filesystem)->deleteDirectory(resource_path('assets/sass'));
+        (new Filesystem)->delete(public_path('js/app.js'));
+        (new Filesystem)->delete(public_path('css/app.css'));
     }
 
     /**
@@ -72,13 +68,8 @@ class SkeletonPreset extends Preset
      */
     protected static function updateBootstrapping()
     {
-        // remove exisiting bootstrap.js file
-        (new Filesystem)->delete(
-            resource_path('assets/js/bootstrap.js')
-        );
-
-        // copy a new bootstrap.js file from your stubs folder
-        copy(__DIR__.'/skeleton-stubs/bootstrap.js', resource_path('assets/js/bootstrap.js'));
+        copy(__DIR__.'/vuetify-stubs/webpack.mix.js', base_path('webpack.mix.js'));
+        copy(__DIR__.'/vuetify-stubs/app.js', resource_path('assets/js/app.js'));
     }
 
     /**
@@ -94,7 +85,7 @@ class SkeletonPreset extends Preset
         );
 
         // copy new one from your stubs folder
-        copy(__DIR__.'/skeleton-stubs/views/welcome.blade.php', resource_path('views/welcome.blade.php'));
+        copy(__DIR__.'/vuetify-stubs/views/welcome.blade.php', resource_path('views/welcome.blade.php'));
     }
 
     /**
@@ -111,7 +102,7 @@ class SkeletonPreset extends Preset
         $auth_route_entry = "Auth::routes();\n\nRoute::get('/home', 'HomeController@index')->name('home');\n\n";
         file_put_contents('./routes/web.php', $auth_route_entry, FILE_APPEND);
 
-        // Copy Skeleton auth views from the stubs folder
+        // Copy vuetify auth views from the stubs folder
         (new Filesystem)->copyDirectory(__DIR__.'/foundation-stubs/views', resource_path('views'));
     }
 }

@@ -1,20 +1,20 @@
 {
-    "name": "laravel-frontend-presets/skeleton",
-    "description": "Laravel 5.5.x Front-end preset for skeleton",
-    "keywords": ["laravel", "preset", "skeleton"],
+    "name": "laravel-frontend-presets/vuetify",
+    "description": "Laravel 5.5.x Front-end preset for Vuetify",
+    "keywords": ["laravel", "preset", "skeleton","vuetify"],
     "license": "MIT",
     "require": {
         "laravel/framework": "5.5.*"
     },
     "autoload": {
         "psr-4": {
-            "LaravelFrontendPresets\\SkeletonPreset\\": "src/"
+            "LaravelFrontendPresets\\VuetifyPreset\\": "src/"
         }
     },
     "extra": {
       "laravel": {
         "providers": [
-          "LaravelFrontendPresets\\SkeletonPreset\\SkeletonPresetServiceProvider"
+          "LaravelFrontendPresets\\VuetifyPreset\\VuetifyPresetServiceProvider"
        ]
       }
     }
