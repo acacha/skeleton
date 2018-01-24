@@ -12,10 +12,16 @@
     <link href="{{ asset('css/app.css') }}" rel="stylesheet">
 </head>
 <body>
-<div id="app">
+<div id="app" v-cloak>
     <v-app light>
         <v-toolbar class="white">
-            <v-toolbar-title v-text="title"></v-toolbar-title>
+            <v-toolbar-title>{{ config('app.name', 'Laravel') }}</v-toolbar-title>
+            <v-spacer></v-spacer>
+            <v-toolbar-side-icon class="hidden-md-and-up"></v-toolbar-side-icon>
+            <v-toolbar-items class="hidden-sm-and-down">
+                <v-btn href="/login" flat>Login</v-btn>
+                <v-btn href="/register" flat>Register</v-btn>
+            </v-toolbar-items>
         </v-toolbar>
         <v-content>
             <section>
@@ -52,7 +58,7 @@
                         <div class="text-xs-center">
                             <h2 class="headline">The best way to start developing</h2>
                             <span class="subheading">
-                Cras facilisis mi vitae nunc 
+                Cras facilisis mi vitae nunc
               </span>
                         </div>
                     </v-flex>
@@ -203,7 +209,7 @@
     el: '#app',
     data () {
       return {
-        title: "{{ config('app.name', 'Laravel') }}"
+        example: 'Laravel'
       }
     }
   })

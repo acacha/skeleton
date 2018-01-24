@@ -23,7 +23,6 @@ To install this preset on your laravel application, simply run:
 composer require laravel-frontend-presets/vuetify
 ```
 
-
 ## Usage
 1. Fresh install Laravel 5.5.x and `cd` to your app.
 2. Install this preset via `composer require laravel-frontend-presets/vuetify`. Laravel 5.5.x will automatically discover this package. No need to register the service provider.
